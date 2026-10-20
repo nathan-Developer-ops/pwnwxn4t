@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#090b13">
+    <title>Admin | PWN WXN4T</title>
+
+    <style>
+        :root {
+            --bg: #090b13;
+            --panel: rgba(18, 24, 39, 0.86);
+            --panel-solid: #121827;
+            --field: #0d1220;
+            --text: #f4f6ff;
+            --muted: #a5aec4;
+            --accent: #a78bfa;
+            --accent-2: #fb7185;
+            --ok: #4ade80;
+            --danger: #f87171;
+            --border: rgba(255, 255, 255, 0.1);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(124, 58, 237, 0.17), transparent 32rem),
+                radial-gradient(circle at 90% 12%, rgba(244, 63, 94, 0.10), transparent 28rem),
+                var(--bg);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.55;
+        }
+
+        button, input, textarea {
+            font: inherit;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 42px;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 700;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            border-color: rgba(167, 139, 250, 0.6);
+        }
+
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            border-color: transparent;
+            color: #100b1c;
+            background: linear-gradient(135deg, var(--accent), #c4b5fd 55%, var(--accent-2));
+        }
+
+        .btn-danger {
+            color: var(--danger);
+            border-color: rgba(248, 113, 113, 0.35);
+        }
+
+        .btn-small {
+            min-height: 34px;
+            padding: 4px 11px;
+            font-size: 0.85rem;
+        }
+
+        /* ---------- Login ---------- */
+        .login-wrap {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: min(420px, 100%);
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            background: var(--panel);
+            box-shadow: 0 25px 90px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-mark {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            color: #fff;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        }
+
+        .login-card h1 {
+            font-size: 1.6rem;
+            letter-spacing: -0.03em;
+        }
+
+        .login-card p.sub {
+            margin: 6px 0 22px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .field input[type="text"],
+        .field input[type="password"],
+        .field input[type="email"],
+        .field input[type="url"],
+        .field textarea {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--field);
+        }
+
+        .field textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+
+        .field input[type="color"] {
+            width: 100%;
+            height: 44px;
+            padding: 3px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--field);
+        }
+
+        .check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .check input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent);
+        }
+
+        .error-box {
+            margin-bottom: 14px;
+            padding: 10px 13px;
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            border-radius: 12px;
+            color: #fecaca;
+            background: rgba(248, 113, 113, 0.08);
+            font-size: 0.9rem;
+        }
+
+        .notice-box {
+            margin-bottom: 16px;
+            padding: 12px 15px;
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            border-radius: 12px;
+            color: #e4dcff;
+            background: rgba(167, 139, 250, 0.08);
+            font-size: 0.9rem;
+        }
+
+        /* ---------- Dashboard ---------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            border-bottom: 1px solid var(--border);
+            background: rgba(9, 11, 19, 0.88);
+            backdrop-filter: blur(18px);
+        }
+
+        .topbar-inner {
+            width: min(1120px, calc(100% - 32px));
+            min-height: 66px;
+            margin-inline: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding-block: 8px;
+        }
+
+        .topbar-title {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 850;
+        }
+
+        .topbar-title .brand-mark {
+            width: 36px;
+            height: 36px;
+            margin: 0;
+            border-radius: 11px;
+            font-size: 0.85rem;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            flex-wrap: wrap;
+        }
+
+        .dirty-flag {
+            color: #fde68a;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .wrap {
+            width: min(1120px, calc(100% - 32px));
+            margin: 22px auto 80px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 6px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            flex: 0 0 auto;
+            padding: 9px 15px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .tab[aria-selected="true"] {
+            color: #100b1c;
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--accent), #c4b5fd);
+        }
+
+        .panel {
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--panel);
+        }
+
+        .panel + .panel {
+            margin-top: 16px;
+        }
+
+        .panel h2 {
+            margin-bottom: 4px;
+            font-size: 1.15rem;
+        }
+
+        .panel p.hint {
+            margin-bottom: 16px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0 16px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--panel);
+        }
+
+        .stat-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .stat-card strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 2rem;
+            letter-spacing: -0.04em;
+        }
+
+        .bar-row {
+            display: grid;
+            grid-template-columns: 120px 1fr 48px;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .bar-row .label {
+            color: var(--muted);
+        }
+
+        .bar-track {
+            height: 14px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: var(--field);
+        }
+
+        .bar-fill {
+            height: 100%;
+            min-width: 2px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        }
+
+        .bar-row .value {
+            text-align: right;
+            font-weight: 800;
+        }
+
+        .item-card {
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--panel-solid);
+        }
+
+        .item-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .item-head strong {
+            font-size: 0.95rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .toast {
+            position: fixed;
+            right: 16px;
+            bottom: max(16px, env(safe-area-inset-bottom));
+            z-index: 60;
+            max-width: min(380px, calc(100% - 32px));
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: #171d2b;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.error {
+            border-color: rgba(248, 113, 113, 0.5);
+        }
+
+        @media (max-width: 760px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .bar-row {
+                grid-template-columns: 92px 1fr 40px;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div class="login-wrap" id="loginView">
+        <form class="login-card" id="loginForm" autocomplete="on">
+            <div class="brand-mark">PV</div>
+            <h1>Panel Admin</h1>
+            <p class="sub">Masuk untuk mengelola website portofolio.</p>
+
+            <div class="notice-box" id="configNotice" hidden>
+                Firebase belum dikonfigurasi. Isi <code>FIREBASE_CONFIG</code> di bagian atas skrip <code>admin.html</code> (dan <code>index.html</code>), lalu muat ulang halaman ini.
+            </div>
+            <div class="error-box" id="loginError" role="alert" hidden></div>
+
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+            </div>
+            <div class="field">
+                <label for="password">Sandi</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+            </div>
+
+            <button class="btn btn-primary" id="loginButton" type="submit" style="width: 100%;">Masuk</button>
+        </form>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboardView" hidden>
+        <header class="topbar">
+            <div class="topbar-inner">
+                <div class="topbar-title">
+                    <span class="brand-mark">PV</span>
+                    <span>Admin PWN WXN4T</span>
+                </div>
+                <div class="topbar-actions">
+                    <span class="dirty-flag" id="dirtyFlag" hidden>Ada perubahan belum disimpan</span>
+                    <a class="btn btn-small" href="./index.html" target="_blank" rel="noopener">Lihat website ↗</a>
+                    <button class="btn btn-primary btn-small" id="saveButton" type="button">Simpan ke website</button>
+                    <button class="btn btn-danger btn-small" id="logoutButton" type="button">Keluar</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="wrap">
+            <div class="notice-box" id="seedNotice" hidden>
+                Belum ada data online. Yang tampil di sini adalah isi bawaan website; klik "Simpan ke website" untuk menerbitkannya ke Firebase.
+            </div>
+            <nav class="tabs" id="tabs" role="tablist" aria-label="Bagian admin"></nav>
+            <div id="tabContent"></div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signInWithEmailAndPassword,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            collection,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+                /* =========================================================
+           KONFIGURASI - isi FIREBASE_CONFIG (sama persis di index.html & admin.html)
+           Isi FIREBASE_CONFIG dari Firebase Console:
+           Project settings -> General -> Your apps -> Web app -> Config
+           ========================================================= */
+
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyDiGmziAkE5ev89dWALcAy-8YpWPmcS2Yo",
+            authDomain: "portofolio-afca2.firebaseapp.com",
+            projectId: "portofolio-afca2",
+            appId: "1:787224207025:web:4b35eb5d9ef6424e300c90"
+        };
+
+        /*
+           Firebase Auth memakai email. Username "nathanael" dipetakan ke email di bawah.
+           Buat user dengan email ini di Firebase Console -> Authentication -> Users.
+           Password TIDAK disimpan di kode; ia hanya ada di Firebase Authentication.
+        */
+        const ADMIN_USERNAME = "nathanael";
+        const ADMIN_EMAIL = "nathanael@pwnwxn4t.app";
+
+        const SITE_DOC_PATH = ["portfolio", "main"];
+        const STATS_COLLECTION = "stats";
+        const TIME_ZONE = "Asia/Jakarta";
+
+        function dayKeyFor(date = new Date()) {
+            return new Intl.DateTimeFormat("en-CA", {
+                timeZone: TIME_ZONE,
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }).format(date);
+        }
+
+        function isFirebaseConfigured() {
+            return Boolean(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.appId);
+        }
+
+        const DEFAULT_SITE_DATA = {
+            settings: {
+                siteName: "PWN WXN4T",
+                ownerName: "PWN WXN4T",
+                username: "@pwnv3nus",
+                role: "Web Developer • Cyber Security Learner",
+                tagline: "Belajar • Berkarya • Bertanggung jawab",
+                greeting: "Halo, saya",
+                heroDescription: "Saya tertarik pada teknologi, pengembangan web, dan keamanan siber. Saya membangun proyek, belajar dari prosesnya, dan membagikan hasilnya.",
+                aboutTitle: "Membangun sesuatu yang bermanfaat.",
+                aboutContent: "Saya senang mengeksplorasi teknologi, membuat website, dan mempelajari cara menjaga aplikasi agar lebih aman. Saya percaya kemampuan berkembang lewat latihan, dokumentasi yang baik, dan penggunaan teknologi secara bertanggung jawab.",
+                availabilityText: "Belajar, membangun, dan terus berkembang",
+                location: "Indonesia",
+                focus: "Web Development & Cyber Security",
+                profileFocus: "Build & Learn",
+                contactTitle: "Punya ide atau ingin berdiskusi?",
+                contactDescription: "Terbuka untuk berbagi proyek, belajar bersama, dan diskusi teknologi yang positif.",
+                email: "hello@example.com",
+                profileImage: "",
+                accent: "#a78bfa",
+                accent2: "#fb7185",
+                background: "#090b13",
+                textColor: "#f4f6ff",
+                showProjects: true
+            },
+            skills: [
+                { id: "skill-1", icon: "⌘", title: "Web Development", description: "Membangun antarmuka web dengan HTML, CSS, dan JavaScript." },
+                { id: "skill-2", icon: "⌁", title: "Cyber Security", description: "Mempelajari dasar keamanan aplikasi dan praktik pengujian yang bertanggung jawab." },
+                { id: "skill-3", icon: "⌕", title: "SQL Injection (SQLi)", description: "Memahami risiko input database dan mitigasi melalui parameterized queries." },
+                { id: "skill-4", icon: "↗", title: "Broken Link Hijacking", description: "Mempelajari risiko tautan eksternal yang kedaluwarsa serta cara memitigasinya." },
+                { id: "skill-5", icon: "▤", title: "Documentation", description: "Menyusun catatan proyek, laporan, dan langkah perbaikan dengan jelas." },
+                { id: "skill-6", icon: "◎", title: "Problem Solving", description: "Memecah masalah menjadi langkah kecil yang bisa diuji dan diperbaiki." },
+                { id: "skill-7", icon: "⌘", title: "Responsive Design", description: "Membuat tata letak yang tetap nyaman di ponsel, tablet, laptop, dan desktop." },
+                { id: "skill-8", icon: "◇", title: "UI/UX Fundamentals", description: "Memperhatikan keterbacaan, konsistensi, aksesibilitas, dan kemudahan navigasi." },
+                { id: "skill-9", icon: "⌁", title: "Git & Version Control", description: "Mempelajari cara menyimpan perubahan kode dan mengelola riwayat proyek." },
+                { id: "skill-10", icon: "▣", title: "Web Accessibility", description: "Membuat konten semantik dengan fokus keyboard, label, dan kontras yang memadai." },
+                { id: "skill-11", icon: "◉", title: "Testing & Debugging", description: "Memeriksa perilaku halaman di berbagai ukuran layar dan memperbaiki kesalahan." },
+                { id: "skill-12", icon: "⌕", title: "Security Awareness", description: "Mengenali risiko umum dan menerapkan praktik aman pada proyek yang diizinkan." }
+            ],
+            projects: [
+                { id: "project-1", icon: "⌘", category: "Web Development", title: "Personal Portfolio", description: "Website portofolio responsif untuk menampilkan profil, keahlian, dan proyek.", link: "", linkLabel: "Lihat detail" },
+                { id: "project-2", icon: "⌕", category: "Cyber Security", title: "SQLi Learning Notes", description: "Dokumentasi edukatif tentang risiko SQL Injection, pengujian di lab sendiri, dan pencegahan menggunakan query berparameter.", link: "", linkLabel: "Baca dokumentasi" },
+                { id: "project-3", icon: "↗", category: "Web Security", title: "Broken Link Hijacking (BLH)", description: "Studi tentang tautan eksternal yang tidak lagi aktif, risiko penyalahgunaan, dan proses verifikasi serta mitigasinya.", link: "", linkLabel: "Baca dokumentasi" },
+                { id: "project-4", icon: "▤", category: "Lab & Documentation", title: "Security Lab Journal", description: "Catatan belajar di lingkungan lab yang diizinkan, mencakup temuan, dampak, dan rekomendasi perbaikan.", link: "", linkLabel: "Lihat catatan" },
+                { id: "project-5", icon: "▧", category: "Frontend", title: "Responsive UI Experiments", description: "Kumpulan eksperimen layout, navigasi mobile, tipografi, dan komponen antarmuka.", link: "", linkLabel: "Lihat detail" },
+                { id: "project-6", icon: "◎", category: "Learning", title: "Web Fundamentals Notes", description: "Ringkasan belajar HTML semantik, CSS modern, JavaScript, dan aksesibilitas web.", link: "", linkLabel: "Baca catatan" }
+            ],
+            roadmap: [
+                { id: "road-1", title: "Fondasi Web", description: "Memperkuat HTML semantik, CSS responsif, JavaScript dasar, dan penggunaan Git.", status: "Fokus dasar" },
+                { id: "road-2", title: "Bangun Proyek", description: "Membuat proyek kecil, menguji di berbagai perangkat, dan mendokumentasikan prosesnya.", status: "Praktik rutin" },
+                { id: "road-3", title: "Keamanan Web", description: "Mempelajari konsep keamanan dan mitigasi melalui lab lokal atau lingkungan yang diizinkan.", status: "Belajar bertanggung jawab" }
+            ],
+            principles: [
+                { id: "prin-1", icon: "⌁", title: "Terus belajar", description: "Selalu terbuka pada dokumentasi, masukan, dan cara baru untuk memperbaiki hasil." },
+                { id: "prin-2", icon: "◇", title: "Rapi dan terukur", description: "Menulis kode dengan penamaan jelas, bagian yang terstruktur, dan perubahan yang mudah ditinjau." },
+                { id: "prin-3", icon: "◎", title: "Aman dan etis", description: "Menguji hanya sistem sendiri atau sistem yang memberi izin, lalu mengutamakan perbaikan." },
+                { id: "prin-4", icon: "▦", title: "Nyaman di semua layar", description: "Memastikan konten mudah dibaca dan kontrol mudah digunakan di ponsel maupun desktop." }
+            ],
+            socials: [
+                { id: "social-1", label: "GitHub", url: "https://github.com/" },
+                { id: "social-2", label: "Telegram", url: "https://t.me/" }
+            ]
+        };
+
+        /* ---------- Definisi form ---------- */
+
+        const SETTINGS_GROUPS = [
+            {
+                title: "Identitas & hero",
+                hint: "Nama, sapaan, dan deskripsi di bagian atas website.",
+                fields: [
+                    { key: "siteName", label: "Nama website (header & footer)", type: "text" },
+                    { key: "ownerName", label: "Nama pemilik (judul hero)", type: "text" },
+                    { key: "username", label: "Username", type: "text" },
+                    { key: "role", label: "Peran / jabatan", type: "text" },
+                    { key: "greeting", label: "Sapaan hero", type: "text" },
+                    { key: "availabilityText", label: "Teks status (lencana hijau)", type: "text" },
+                    { key: "heroDescription", label: "Deskripsi hero", type: "textarea", wide: true },
+                    { key: "location", label: "Lokasi", type: "text" },
+                    { key: "focus", label: "Fokus (hero)", type: "text" },
+                    { key: "profileFocus", label: "Fokus saat ini (kartu profil)", type: "text" },
+                    { key: "profileImage", label: "URL foto profil (https://...)", type: "url" }
+                ]
+            },
+            {
+                title: "Tentang",
+                hint: "Bagian \"Sedikit tentang saya\".",
+                fields: [
+                    { key: "aboutTitle", label: "Judul", type: "text", wide: true },
+                    { key: "aboutContent", label: "Isi", type: "textarea", wide: true }
+                ]
+            },
+            {
+                title: "Kontak & footer",
+                hint: "Email dan teks bagian kontak.",
+                fields: [
+                    { key: "email", label: "Email tujuan tombol \"Kirim Pesan\"", type: "text" },
+                    { key: "contactTitle", label: "Judul kontak", type: "text" },
+                    { key: "contactDescription", label: "Deskripsi kontak", type: "textarea", wide: true },
+                    { key: "tagline", label: "Tagline footer", type: "text", wide: true }
+                ]
+            },
+            {
+                title: "Tampilan",
+                hint: "Warna dan visibilitas bagian proyek.",
+                fields: [
+                    { key: "accent", label: "Warna aksen", type: "color" },
+                    { key: "accent2", label: "Warna aksen 2", type: "color" },
+                    { key: "background", label: "Warna latar", type: "color" },
+                    { key: "textColor", label: "Warna teks", type: "color" },
+                    { key: "showProjects", label: "Tampilkan bagian Proyek di website", type: "checkbox", wide: true }
+                ]
+            }
+        ];
+
+        const LISTS = {
+            skills: {
+                title: "Keahlian",
+                hint: "Kartu di bagian \"Keahlian & minat\".",
+                itemName: "Keahlian",
+                idPrefix: "skill",
+                fields: [
+                    { key: "icon", label: "Ikon (simbol/emoji)", type: "text" },
+                    { key: "title", label: "Judul", type: "text" },
+                    { key: "description", label: "Deskripsi", type: "textarea", wide: true }
+                ],
+                blank: () => ({ icon: "✦", title: "", description: "" })
+            },
+            projects: {
+                title: "Proyek",
+                hint: "Kartu di bagian \"Proyek & dokumentasi\". Link boleh kosong.",
+                itemName: "Proyek",
+                idPrefix: "project",
+                fields: [
+                    { key: "icon", label: "Ikon (simbol/emoji)", type: "text" },
+                    { key: "category", label: "Kategori", type: "text" },
+                    { key: "title", label: "Judul", type: "text" },
+                    { key: "linkLabel", label: "Teks tautan", type: "text" },
+                    { key: "link", label: "URL tautan (https://...)", type: "url", wide: true },
+                    { key: "description", label: "Deskripsi", type: "textarea", wide: true }
+                ],
+                blank: () => ({ icon: "✦", category: "", title: "", description: "", link: "", linkLabel: "Lihat detail" })
+            },
+            roadmap: {
+                title: "Roadmap",
+                hint: "Tahap belajar. Nomor 01, 02, ... dibuat otomatis sesuai urutan.",
+                itemName: "Tahap",
+                idPrefix: "road",
+                fields: [
+                    { key: "title", label: "Judul", type: "text" },
+                    { key: "status", label: "Label status", type: "text" },
+                    { key: "description", label: "Deskripsi", type: "textarea", wide: true }
+                ],
+                blank: () => ({ title: "", status: "", description: "" })
+            },
+            principles: {
+                title: "Prinsip",
+                hint: "Kartu di bagian \"Prinsip yang dipegang\".",
+                itemName: "Prinsip",
+                idPrefix: "prin",
+                fields: [
+                    { key: "icon", label: "Ikon (simbol/emoji)", type: "text" },
+                    { key: "title", label: "Judul", type: "text" },
+                    { key: "description", label: "Deskripsi", type: "textarea", wide: true }
+                ],
+                blank: () => ({ icon: "✦", title: "", description: "" })
+            },
+            socials: {
+                title: "Sosial media",
+                hint: "Tautan di bagian kontak. Hanya http(s) yang valid yang ditampilkan.",
+                itemName: "Tautan",
+                idPrefix: "social",
+                fields: [
+                    { key: "label", label: "Nama (mis. GitHub)", type: "text" },
+                    { key: "url", label: "URL (https://...)", type: "url" }
+                ],
+                blank: () => ({ label: "", url: "" })
+            }
+        };
+
+        const TABS = [
+            { id: "stats", label: "Statistik" },
+            { id: "settings", label: "Profil & Tampilan" },
+            { id: "skills", label: "Keahlian" },
+            { id: "projects", label: "Proyek" },
+            { id: "roadmap", label: "Roadmap" },
+            { id: "principles", label: "Prinsip" },
+            { id: "socials", label: "Sosial" }
+        ];
+
+        /* ---------- State ---------- */
+
+        let app = null;
+        let auth = null;
+        let db = null;
+        let data = null;
+        let activeTab = "stats";
+        let dirty = false;
+        let saving = false;
+
+        const $ = id => document.getElementById(id);
+
+        function el(tag, props = {}, ...children) {
+            const node = document.createElement(tag);
+            Object.entries(props).forEach(([key, value]) => {
+                if (key === "class") {
+                    node.className = value;
+                } else if (key === "text") {
+                    node.textContent = value;
+                } else if (key.startsWith("on") && typeof value === "function") {
+                    node.addEventListener(key.slice(2).toLowerCase(), value);
+                } else if (value !== undefined && value !== null && value !== false) {
+                    node.setAttribute(key, value === true ? "" : value);
+                }
+            });
+            node.append(...children.filter(Boolean));
+            return node;
+        }
+
+        function showToast(message, isError = false) {
+            const toast = $("toast");
+            toast.textContent = message;
+            toast.classList.toggle("error", isError);
+            toast.classList.add("show");
+            window.clearTimeout(showToast.timer);
+            showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 3600);
+        }
+
+        function setDirty(value) {
+            dirty = value;
+            $("dirtyFlag").hidden = !value;
+        }
+
+        function normalizeData(online) {
+            const source = online || {};
+            const pick = (key) => Array.isArray(source[key]) ? source[key] : DEFAULT_SITE_DATA[key];
+            return structuredClone({
+                settings: { ...DEFAULT_SITE_DATA.settings, ...(source.settings || {}) },
+                skills: pick("skills"),
+                projects: pick("projects"),
+                roadmap: pick("roadmap"),
+                principles: pick("principles"),
+                socials: pick("socials")
+            });
+        }
+
+        function newId(prefix) {
+            return `${prefix}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+        }
+
+        /* ---------- Login ---------- */
+
+        function showLoginError(message) {
+            const box = $("loginError");
+            box.textContent = message;
+            box.hidden = !message;
+        }
+
+        function authErrorMessage(error) {
+            const code = error?.code || "";
+            if (code === "auth/network-request-failed") {
+                return "Koneksi bermasalah. Periksa internet lalu coba lagi.";
+            }
+            if (code === "auth/too-many-requests") {
+                return "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.";
+            }
+            if (code === "auth/unauthorized-domain") {
+                return "Domain ini belum diizinkan di Firebase (Authentication > Settings > Authorized domains).";
+            }
+            if (code === "auth/operation-not-allowed") {
+                return "Metode Email/Password belum diaktifkan di Firebase Authentication.";
+            }
+            return "Username atau sandi salah.";
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            showLoginError("");
+
+            const username = $("username").value.trim().toLowerCase();
+            const password = $("password").value;
+
+            if (username !== ADMIN_USERNAME.toLowerCase()) {
+                showLoginError("Username atau sandi salah.");
+                return;
+            }
+
+            $("loginButton").disabled = true;
+            $("loginButton").textContent = "Memeriksa...";
+
+            try {
+                await signInWithEmailAndPassword(auth, ADMIN_EMAIL, password);
+                $("password").value = "";
+            } catch (error) {
+                console.warn("Login gagal:", error?.code);
+                showLoginError(authErrorMessage(error));
+            } finally {
+                $("loginButton").disabled = false;
+                $("loginButton").textContent = "Masuk";
+            }
+        }
+
+        async function handleLogout() {
+            if (dirty && !window.confirm("Ada perubahan yang belum disimpan. Tetap keluar?")) {
+                return;
+            }
+
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Gagal keluar:", error);
+                showToast("Gagal keluar. Coba lagi.", true);
+            }
+        }
+
+        /* ---------- Data ---------- */
+
+        async function loadSiteData() {
+            const snapshot = await getDoc(doc(db, ...SITE_DOC_PATH));
+            $("seedNotice").hidden = snapshot.exists();
+            data = normalizeData(snapshot.exists() ? snapshot.data() : null);
+            setDirty(false);
+        }
+
+        function validateBeforeSave() {
+            const colorPattern = /^#[0-9a-fA-F]{6}$/;
+            const settings = data.settings;
+
+            for (const key of ["accent", "accent2", "background", "textColor"]) {
+                if (!colorPattern.test(settings[key] || "")) {
+                    return `Warna "${key}" tidak valid.`;
+                }
+            }
+
+            if (!String(settings.siteName || "").trim()) {
+                return "Nama website tidak boleh kosong.";
+            }
+
+            const urlOk = value => {
+                if (!value) {
+                    return true;
+                }
+                try {
+                    const url = new URL(value);
+                    return url.protocol === "https:" || url.protocol === "http:";
+                } catch (error) {
+                    return false;
+                }
+            };
+
+            if (!urlOk(settings.profileImage)) {
+                return "URL foto profil harus diawali http:// atau https://.";
+            }
+
+            for (const project of data.projects) {
+                if (!urlOk(project.link)) {
+                    return `Tautan proyek "${project.title || "(tanpa judul)"}" tidak valid.`;
+                }
+            }
+
+            for (const social of data.socials) {
+                if (!social.label?.trim() || !social.url?.trim() || !urlOk(social.url)) {
+                    return "Setiap tautan sosial harus punya nama dan URL http(s) yang valid.";
+                }
+            }
+
+            return "";
+        }
+
+        async function saveSiteData() {
+            if (saving) {
+                return;
+            }
+
+            const problem = validateBeforeSave();
+            if (problem) {
+                showToast(problem, true);
+                return;
+            }
+
+            saving = true;
+            $("saveButton").disabled = true;
+            $("saveButton").textContent = "Menyimpan...";
+
+            try {
+                await setDoc(doc(db, ...SITE_DOC_PATH), data);
+                $("seedNotice").hidden = true;
+                setDirty(false);
+                showToast("Tersimpan. Website utama sudah diperbarui.");
+            } catch (error) {
+                console.error("Gagal menyimpan:", error);
+                showToast(
+                    error?.code === "permission-denied"
+                        ? "Ditolak oleh Firestore Rules. Pastikan rules sudah dipublikasikan."
+                        : "Gagal menyimpan. Periksa koneksi lalu coba lagi.",
+                    true
+                );
+            } finally {
+                saving = false;
+                $("saveButton").disabled = false;
+                $("saveButton").textContent = "Simpan ke website";
+            }
+        }
+
+        /* ---------- Render: form ---------- */
+
+        function renderField(field, target, key) {
+            const id = `f-${Math.random().toString(36).slice(2, 9)}`;
+            const current = target[key];
+
+            if (field.type === "checkbox") {
+                const input = el("input", { type: "checkbox", id });
+                input.checked = current !== false && Boolean(current);
+                input.addEventListener("change", () => {
+                    target[key] = input.checked;
+                    setDirty(true);
+                });
+                return el("label", { class: "check", for: id, style: field.wide ? "grid-column: 1 / -1;" : "" }, input, field.label);
+            }
+
+            const input = field.type === "textarea"
+                ? el("textarea", { id })
+                : el("input", { id, type: field.type === "color" ? "color" : field.type === "url" ? "url" : "text" });
+
+            input.value = typeof current === "string" ? current : "";
+            input.addEventListener("input", () => {
+                target[key] = input.value;
+                setDirty(true);
+            });
+
+            return el(
+                "div",
+                { class: "field", style: field.wide ? "grid-column: 1 / -1;" : "" },
+                el("label", { for: id, text: field.label }),
+                input
+            );
+        }
+
+        function renderSettingsTab(container) {
+            SETTINGS_GROUPS.forEach(group => {
+                const grid = el("div", { class: "grid-2" });
+                group.fields.forEach(field => grid.appendChild(renderField(field, data.settings, field.key)));
+                container.appendChild(
+                    el("section", { class: "panel" },
+                        el("h2", { text: group.title }),
+                        el("p", { class: "hint", text: group.hint }),
+                        grid
+                    )
+                );
+            });
+        }
+
+        function moveItem(listKey, index, delta) {
+            const list = data[listKey];
+            const target = index + delta;
+            if (target < 0 || target >= list.length) {
+                return;
+            }
+            [list[index], list[target]] = [list[target], list[index]];
+            setDirty(true);
+            renderTab();
+        }
+
+        function renderListTab(container, listKey) {
+            const config = LISTS[listKey];
+            const list = data[listKey];
+
+            const panel = el("section", { class: "panel" },
+                el("h2", { text: `${config.title} (${list.length})` }),
+                el("p", { class: "hint", text: config.hint })
+            );
+
+            if (!list.length) {
+                panel.appendChild(el("p", { class: "hint", text: "Belum ada item. Tambahkan lewat tombol di bawah." }));
+            }
+
+            list.forEach((item, index) => {
+                const grid = el("div", { class: "grid-2" });
+                config.fields.forEach(field => grid.appendChild(renderField(field, item, field.key)));
+
+                const actions = el("div", { class: "item-actions" },
+                    el("button", { class: "btn btn-small", type: "button", text: "↑", "aria-label": "Naikkan", onclick: () => moveItem(listKey, index, -1) }),
+                    el("button", { class: "btn btn-small", type: "button", text: "↓", "aria-label": "Turunkan", onclick: () => moveItem(listKey, index, 1) }),
+                    el("button", {
+                        class: "btn btn-small btn-danger",
+                        type: "button",
+                        text: "Hapus",
+                        onclick: () => {
+                            const name = item.title || item.label || `${config.itemName} ${index + 1}`;
+                            if (!window.confirm(`Hapus "${name}"?`)) {
+                                return;
+                            }
+                            list.splice(index, 1);
+                            setDirty(true);
+                            renderTab();
+                        }
+                    })
+                );
+
+                panel.appendChild(
+                    el("div", { class: "item-card" },
+                        el("div", { class: "item-head" },
+                            el("strong", { text: `${config.itemName} ${index + 1}` }),
+                            actions
+                        ),
+                        grid
+                    )
+                );
+            });
+
+            panel.appendChild(
+                el("button", {
+                    class: "btn btn-primary",
+                    type: "button",
+                    text: `+ Tambah ${config.itemName.toLowerCase()}`,
+                    onclick: () => {
+                        list.push({ id: newId(config.idPrefix), ...config.blank() });
+                        setDirty(true);
+                        renderTab();
+                    }
+                })
+            );
+
+            container.appendChild(panel);
+        }
+
+        /* ---------- Render: statistik ---------- */
+
+        function dayLabel(key, offset) {
+            if (offset === 0) {
+                return "Hari ini";
+            }
+            if (offset === 1) {
+                return "Kemarin";
+            }
+            const [year, month, day] = key.split("-").map(Number);
+            return new Intl.DateTimeFormat("id-ID", {
+                weekday: "short",
+                day: "numeric",
+                month: "short",
+                timeZone: "UTC"
+            }).format(new Date(Date.UTC(year, month - 1, day)));
+        }
+
+        async function renderStatsTab(container) {
+            const loading = el("p", { class: "hint", text: "Memuat statistik..." });
+            container.appendChild(loading);
+
+            let snapshot;
+            try {
+                snapshot = await getDocs(collection(db, STATS_COLLECTION));
+            } catch (error) {
+                console.error("Gagal memuat statistik:", error);
+                loading.textContent = "Statistik tidak dapat dimuat. Pastikan Firestore Rules sudah dipublikasikan.";
+                return;
+            }
+
+            if (activeTab !== "stats") {
+                return;
+            }
+
+            const counts = new Map();
+            let allTime = 0;
+            snapshot.forEach(document => {
+                const count = Number(document.data().count) || 0;
+                counts.set(document.id, count);
+                allTime += count;
+            });
+
+            const days = [];
+            for (let offset = 0; offset < 7; offset += 1) {
+                const key = dayKeyFor(new Date(Date.now() - offset * 86400000));
+                days.push({ key, offset, count: counts.get(key) || 0 });
+            }
+
+            const today = days[0].count;
+            const yesterday = days[1].count;
+            const week = days.reduce((sum, day) => sum + day.count, 0);
+            const max = Math.max(1, ...days.map(day => day.count));
+
+            const card = (label, value) => el("div", { class: "stat-card" },
+                el("span", { text: label }),
+                el("strong", { text: value.toLocaleString("id-ID") })
+            );
+
+            const bars = el("section", { class: "panel" },
+                el("h2", { text: "Pengunjung 7 hari terakhir" }),
+                el("p", { class: "hint", text: "Dihitung satu kali per browser per hari (zona waktu Asia/Jakarta). Pengunjung yang memblokir skrip atau penyimpanan lokal bisa terhitung lebih dari sekali atau tidak terhitung." })
+            );
+
+            days.forEach(day => {
+                bars.appendChild(
+                    el("div", { class: "bar-row" },
+                        el("span", { class: "label", text: dayLabel(day.key, day.offset) }),
+                        el("div", { class: "bar-track" },
+                            el("div", { class: "bar-fill", style: `width: ${(day.count / max) * 100}%` })
+                        ),
+                        el("span", { class: "value", text: String(day.count) })
+                    )
+                );
+            });
+
+            const refresh = el("button", {
+                class: "btn btn-small",
+                type: "button",
+                text: "Muat ulang statistik",
+                onclick: () => renderTab()
+            });
+
+            loading.replaceWith(
+                el("div", {},
+                    el("div", { class: "stat-grid" },
+                        card("Hari ini", today),
+                        card("Kemarin", yesterday),
+                        card("7 hari terakhir", week),
+                        card("Total sejak dicatat", allTime)
+                    ),
+                    bars,
+                    el("div", { style: "margin-top: 14px;" }, refresh)
+                )
+            );
+        }
+
+        /* ---------- Render: tab ---------- */
+
+        function renderTabs() {
+            const nav = $("tabs");
+            nav.replaceChildren();
+
+            TABS.forEach(tab => {
+                nav.appendChild(
+                    el("button", {
+                        class: "tab",
+                        type: "button",
+                        role: "tab",
+                        "aria-selected": String(tab.id === activeTab),
+                        text: tab.label,
+                        onclick: () => {
+                            activeTab = tab.id;
+                            renderTabs();
+                            renderTab();
+                        }
+                    })
+                );
+            });
+        }
+
+        function renderTab() {
+            const container = $("tabContent");
+            container.replaceChildren();
+
+            if (activeTab === "stats") {
+                renderStatsTab(container);
+            } else if (activeTab === "settings") {
+                renderSettingsTab(container);
+            } else {
+                renderListTab(container, activeTab);
+            }
+        }
+
+        /* ---------- Siklus hidup ---------- */
+
+        async function showDashboard() {
+            try {
+                await loadSiteData();
+            } catch (error) {
+                console.error("Gagal memuat data:", error);
+                showToast("Data website tidak dapat dimuat. Pastikan Firestore Rules sudah dipublikasikan.", true);
+                data = normalizeData(null);
+            }
+
+            $("loginView").hidden = true;
+            $("dashboardView").hidden = false;
+            renderTabs();
+            renderTab();
+        }
+
+        function showLogin() {
+            $("dashboardView").hidden = true;
+            $("loginView").hidden = false;
+            data = null;
+            setDirty(false);
+        }
+
+        function init() {
+            $("loginForm").addEventListener("submit", handleLogin);
+            $("logoutButton").addEventListener("click", handleLogout);
+            $("saveButton").addEventListener("click", saveSiteData);
+
+            window.addEventListener("beforeunload", event => {
+                if (dirty) {
+                    event.preventDefault();
+                    event.returnValue = "";
+                }
+            });
+
+            if (!isFirebaseConfigured()) {
+                $("configNotice").hidden = false;
+                $("loginButton").disabled = true;
+                return;
+            }
+
+            app = initializeApp(FIREBASE_CONFIG);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            onAuthStateChanged(auth, async user => {
+                if (!user) {
+                    showLogin();
+                    return;
+                }
+
+                if (user.email !== ADMIN_EMAIL) {
+                    await signOut(auth);
+                    showLoginError("Akun ini tidak memiliki akses admin.");
+                    return;
+                }
+
+                await showDashboard();
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
